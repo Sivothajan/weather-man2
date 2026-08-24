@@ -1,0 +1,29 @@
+# dependencies
+node_modules/
+**/node_modules/
+
+# next.js
+.next/
+**/.next/
+out/
+**/out/
+build/
+**/build/
+
+# env
+.env
+.env.*
+!.env.example
+
+# misc
+.DS_Store
+*.pem
+*.tsbuildinfo
+
+# vercel
+.vercel/
+**/.vercel/
+
+# Custom
+old/
+codebase/iot-firmware/**/config.h
