@@ -56,6 +56,11 @@ const limitSchema = z.coerce.number().int().min(1).max(500).default(24);
 
 type PrismaWeatherReading = {
   id: number;
+  stationId: string;
+  station: {
+    stationCode: string;
+    name: string;
+  };
   temperature: number;
   humidity: number;
   soilMoisture: number;
@@ -69,6 +74,9 @@ type PrismaWeatherReading = {
 function toWeatherReading(reading: PrismaWeatherReading): WeatherReading {
   return {
     id: reading.id,
+    stationId: reading.stationId,
+    stationCode: reading.station.stationCode,
+    stationName: reading.station.name,
     temperature: reading.temperature,
     humidity: reading.humidity,
     soilMoisture: reading.soilMoisture,
@@ -84,9 +92,26 @@ export function parseReadingLimit(value: string | null) {
   return limitSchema.parse(value ?? undefined);
 }
 
-export async function getRecentWeatherReadings(limit = 24) {
+type RecentReadingOptions = {
+  includePrivate?: boolean;
+};
+
+export async function getRecentWeatherReadings(
+  limit = 24,
+  stationCode?: string,
+  options: RecentReadingOptions = {}
+) {
   const take = limitSchema.parse(limit);
   const readings = await prisma.weatherReading.findMany({
+    where: {
+      station: {
+        ...(stationCode && stationCode !== 'all' ? { stationCode } : {}),
+        ...(options.includePrivate ? {} : { isActive: true, isPublic: true }),
+      },
+    },
+    include: {
+      station: true,
+    },
     orderBy: {
       timestamp: 'desc',
     },
@@ -96,10 +121,11 @@ export async function getRecentWeatherReadings(limit = 24) {
   return readings.map(toWeatherReading);
 }
 
-export async function createWeatherReading(input: unknown) {
+export async function createWeatherReading(input: unknown, stationId: string) {
   const reading = createWeatherReadingSchema.parse(input);
   const created = await prisma.weatherReading.create({
     data: {
+      stationId,
       temperature: reading.temperature,
       humidity: reading.humidity,
       soilMoisture: reading.soilMoisture,
@@ -109,13 +135,16 @@ export async function createWeatherReading(input: unknown) {
       fire: reading.fire,
       timestamp: reading.timestamp,
     },
+    include: {
+      station: true,
+    },
   });
 
   const alerts = await Promise.all([
     reading.rain
       ? sendSensorAlert(
-          'Rain detected',
-          `Rain sensor triggered at ${created.timestamp.toISOString()}${
+          `Rain detected at ${created.station.name}`,
+          `Rain sensor triggered at ${created.station.name} on ${created.timestamp.toISOString()}${
             reading.rainRaw == null ? '' : ` with raw value ${reading.rainRaw}`
           }.`
         )
@@ -125,8 +154,8 @@ export async function createWeatherReading(input: unknown) {
         } as const),
     reading.fire
       ? sendSensorAlert(
-          'Fire detected',
-          `Fire sensor triggered at ${created.timestamp.toISOString()}. Immediate attention required.`
+          `Fire detected at ${created.station.name}`,
+          `Fire sensor triggered at ${created.station.name} on ${created.timestamp.toISOString()}. Immediate attention required.`
         )
       : Promise.resolve({
           status: 'skipped',

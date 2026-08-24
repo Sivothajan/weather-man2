@@ -1,7 +1,7 @@
 {
   "$schema": "https://www.schemastore.org/package.json",
   "name": "weather-man-web-app",
-  "description": "Web dashboard and API for The Weather Man sensor station.",
+  "description": "Multi-station weather monitor, admin console, and sensor readings API for The Weather Man.",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -18,18 +18,21 @@
     "knip:depcheck": "knip --dependencies",
     "knip:fix": "knip --fix",
     "lint-staged": "lint-staged",
-    "prepare": "husky"
+    "prepare": "cd ../.. && husky codebase/web-app/.husky"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
+    "@better-auth/prisma-adapter": "^1.7.1",
     "@prisma/adapter-pg": "^7.9.1",
     "@prisma/client": "^7.9.1",
+    "better-auth": "^1.7.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.4.0",
     "lucide-react": "^1.33.0",
     "next": "16.3.2",
     "next-themes": "^0.4.6",
+    "nodemailer": "^9.0.5",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "recharts": "3.8.0",
@@ -44,8 +47,10 @@
     "@tailwindcss/typography": "^0.5.20",
     "@types/bun": "^1.4.0",
     "@types/node": "^26.2.0",
+    "@types/nodemailer": "^8.0.1",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.5",
+    "dotenv": "^17.4.2",
     "eslint": "^9.39.5",
     "eslint-config-next": "16.3.2",
     "eslint-config-prettier": "^10.1.8",

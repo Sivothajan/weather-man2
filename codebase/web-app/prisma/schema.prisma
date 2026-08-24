@@ -6,8 +6,109 @@ datasource db {
   provider = "postgresql"
 }
 
+enum UserRole {
+  ADMIN
+  VIEWER
+}
+
+model User {
+  id            String   @id
+  name          String
+  email         String   @unique
+  emailVerified Boolean  @default(false)
+  image         String?
+  role          UserRole @default(VIEWER)
+  createdAt     DateTime @default(now()) @db.Timestamp(6)
+  updatedAt     DateTime @updatedAt @db.Timestamp(6)
+
+  accounts Account[]
+  sessions Session[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime @db.Timestamp(6)
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  userId    String
+  issuer                String
+  accountId             String
+  providerId            String
+  accessToken           String?
+  refreshToken          String?
+  accessTokenExpiresAt  DateTime? @db.Timestamp(6)
+  refreshTokenExpiresAt DateTime? @db.Timestamp(6)
+  scope                 String?
+  idToken               String?
+  password              String?
+  createdAt             DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt             DateTime  @updatedAt @db.Timestamp(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([issuer, accountId])
+  @@index([userId])
+}
+
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime @db.Timestamp(6)
+  createdAt  DateTime @default(now()) @db.Timestamp(6)
+  updatedAt  DateTime @updatedAt @db.Timestamp(6)
+
+  @@index([identifier])
+  @@index([expiresAt])
+}
+
+model WeatherStation {
+  id          String   @id @default(cuid())
+  stationCode String   @unique
+  name        String
+  location    String?
+  description String?
+  isActive    Boolean  @default(true)
+  isPublic    Boolean  @default(true)
+  refreshIntervalMs Int @default(5000)
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime @updatedAt @db.Timestamp(6)
+
+  apiKeys  StationApiKey[]
+  readings WeatherReading[]
+}
+
+model StationApiKey {
+  id         String    @id @default(cuid())
+  stationId  String
+  name       String
+  keyHash    String    @unique
+  keyPrefix  String
+  lastUsedAt DateTime? @db.Timestamp(6)
+  revokedAt  DateTime? @db.Timestamp(6)
+  createdAt  DateTime  @default(now()) @db.Timestamp(6)
+
+  station WeatherStation @relation(fields: [stationId], references: [id], onDelete: Cascade)
+
+  @@index([stationId])
+}
+
 model WeatherReading {
   id           Int      @id @default(autoincrement())
+  stationId    String
   temperature  Float
   humidity     Float
   soilMoisture Float
@@ -17,5 +118,8 @@ model WeatherReading {
   fire         Boolean
   timestamp    DateTime @default(now()) @db.Timestamp(6)
 
+  station WeatherStation @relation(fields: [stationId], references: [id], onDelete: Cascade)
+
+  @@index([stationId, timestamp(sort: Desc)])
   @@index([timestamp(sort: Desc)])
 }
