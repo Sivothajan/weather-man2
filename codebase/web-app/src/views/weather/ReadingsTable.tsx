@@ -16,10 +16,11 @@ type ReadingsTableProps = {
 export default function ReadingsTable({ readings }: ReadingsTableProps) {
   return (
     <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
-      <Table className="min-w-[680px]">
+      <Table className="min-w-190">
         <TableHeader>
           <TableRow>
             <TableHead>Time</TableHead>
+            <TableHead>Station</TableHead>
             <TableHead className="text-right">Temp</TableHead>
             <TableHead className="text-right">Humidity</TableHead>
             <TableHead className="text-right">Soil</TableHead>
@@ -32,7 +33,7 @@ export default function ReadingsTable({ readings }: ReadingsTableProps) {
             <TableRow>
               <TableCell
                 className="h-20 text-center text-muted-foreground"
-                colSpan={6}
+                colSpan={7}
               >
                 No weather readings recorded yet.
               </TableCell>
@@ -43,6 +44,7 @@ export default function ReadingsTable({ readings }: ReadingsTableProps) {
                 <TableCell className="min-w-48 font-mono text-xs">
                   {formatReadingTime(reading.timestamp)}
                 </TableCell>
+                <TableCell>{reading.stationName}</TableCell>
                 <TableCell className="text-right font-mono">
                   {formatNumber(reading.temperature, '°C')}
                 </TableCell>

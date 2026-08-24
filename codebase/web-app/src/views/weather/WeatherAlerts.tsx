@@ -43,7 +43,7 @@ export default function WeatherAlerts({ latest, error }: WeatherAlertsProps) {
           <AlertTriangle className="size-4 text-sensor-rain" />
           <AlertTitle>Rain detected</AlertTitle>
           <AlertDescription>
-            The station currently reports active rain detection.
+            {latest.stationName} currently reports active rain detection.
           </AlertDescription>
         </Alert>
       ) : null}
@@ -52,7 +52,7 @@ export default function WeatherAlerts({ latest, error }: WeatherAlertsProps) {
           <AlertTriangle className="size-4" />
           <AlertTitle>Fire detected</AlertTitle>
           <AlertDescription>
-            Immediate attention is required near the station.
+            Immediate attention is required near {latest.stationName}.
           </AlertDescription>
         </Alert>
       ) : null}
