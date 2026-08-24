@@ -1,3 +1,5 @@
+cd "$(dirname "$0")/.."
+
 if [ -f pnpm-lock.yaml ]; then
     command -v pnpm >/dev/null 2>&1 || {
         echo "pnpm-lock.yaml found, but pnpm is not installed."

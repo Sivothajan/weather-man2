@@ -1,7 +1,7 @@
 {
   "name": "The Weather Man",
   "short_name": "Weather Man",
-  "description": "A dashboard and API for environmental sensor readings.",
+  "description": "A multi-station weather monitor, admin console, and API for environmental sensor readings.",
   "start_url": "/",
   "scope": "/",
   "icons": [

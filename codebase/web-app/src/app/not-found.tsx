@@ -16,7 +16,7 @@ export default function NotFound() {
       <ErrorPageFlag />
       <PageState
         title="Page not found"
-        message="The Weather Man does not have a station view at this address."
+        message="The Weather Man does not have a page at this address."
         actionHref="/"
         actionLabel="Go home"
       />

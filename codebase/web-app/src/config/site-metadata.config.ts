@@ -6,7 +6,7 @@ export const siteConfig = {
   name: 'The Weather Man',
   shortName: 'Weather Man',
   description:
-    'A Next.js dashboard and API for environmental sensor readings from The Weather Man station.',
+    'A multi-station weather monitor, admin console, and API for The Weather Man environmental sensor network.',
   url: publicEnvConfig.NEXT_PUBLIC_SITE_URL,
   lightThemeColor: '#f9f8f2',
   darkThemeColor: '#161823',

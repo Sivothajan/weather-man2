@@ -7,7 +7,7 @@ export const metadata: Metadata = buildPageMetadata({
   absoluteTitle: true,
   title: 'The Weather Man',
   description:
-    'Project overview and API reference for The Weather Man environmental sensor dashboard.',
+    'Project overview and API reference for The Weather Man multi-station environmental sensor monitor.',
   path: '/',
 });
 

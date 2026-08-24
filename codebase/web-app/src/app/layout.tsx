@@ -44,9 +44,13 @@ export const metadata: Metadata = {
   category: 'technology',
   keywords: [
     'weather station',
+    'weather stations',
     'environmental sensors',
+    'station administration',
+    'sensor API',
     'temperature dashboard',
     'humidity dashboard',
+    'private station monitoring',
     'Prisma',
     'Next.js',
   ],

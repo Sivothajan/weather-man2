@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import PageState from '@/views/shared/PageState';
 
 const errorTitle = 'Application Error | The Weather Man';
-const errorDescription = 'The Weather Man dashboard hit an unexpected issue.';
+const errorDescription = 'The Weather Man monitor hit an unexpected issue.';
 
 export default function Error({
   error,
@@ -38,7 +38,7 @@ export default function Error({
   return (
     <PageState
       title="Weather data stalled"
-      message={error.message || 'The dashboard hit an unexpected issue.'}
+      message={error.message || 'The monitor hit an unexpected issue.'}
       actionLabel="Try again"
       onAction={reset}
     />

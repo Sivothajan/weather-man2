@@ -1,4 +1,7 @@
 {
   "$schema": "https://unpkg.com/knip/schema.json",
+  "ignoreIssues": {
+    "src/components/ui/**": ["exports"]
+  },
   "tags": ["-lintignore"]
 }
