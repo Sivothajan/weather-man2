@@ -1,7 +1,7 @@
 # The Weather Man
 
 The Weather Man is an environmental sensor station project with a Next.js web
-app under `codebase/web-app`.
+app under [codebase/web-app](codebase/web-app/README.md).
 
 The active web app uses:
 
@@ -14,11 +14,12 @@ The active web app uses:
 ## Diagrams
 
 Mermaid diagrams for the web app, API, database, and firmware flow are in
-`docs/diagrams.md`.
+[docs/diagrams.md](docs/diagrams.md).
 
 ## Firmware
 
-Fresh Arduino/ESP8266 firmware lives under `codebase/iot-firmware`.
+Fresh Arduino/ESP8266 firmware lives under
+[codebase/iot-firmware](codebase/iot-firmware/README.md).
 
 - Arduino Mega 2560 reads sensors, writes SD logs, displays values on OLED, and
   sends camelCase JSON over `Serial1`.

@@ -36,9 +36,10 @@ The Mega sends camelCase JSON matching the Prisma-backed API:
 
 ## Folders
 
-- `weather-station/arduinoMega2560` - sensor reader, display, SD log, resend
-  queue.
-- `weather-station/nodeMcuV3` - Wi-Fi HTTP/HTTPS JSON forwarder.
+- [weather-station/arduinoMega2560](weather-station/arduinoMega2560/README.md)
+  - sensor reader, display, SD log, resend queue.
+- [weather-station/nodeMcuV3](weather-station/nodeMcuV3/README.md) - Wi-Fi
+  HTTP/HTTPS JSON forwarder.
 
 ## Setup
 
