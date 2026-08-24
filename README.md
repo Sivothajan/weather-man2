@@ -11,6 +11,11 @@ The active web app uses:
 - `/api/readings` for reading ingestion and dashboard data
 - ntfy alerts for rain and fire events when configured
 
+## Diagrams
+
+Mermaid diagrams for the web app, API, database, and firmware flow are in
+`docs/diagrams.md`.
+
 ## Firmware
 
 Fresh Arduino/ESP8266 firmware lives under `codebase/iot-firmware`.
