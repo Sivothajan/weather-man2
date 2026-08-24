@@ -34,8 +34,13 @@ const char *WIFI_SSID = "your-wifi";
 const char *WIFI_PASSWORD = "your-password";
 const char *API_BASE_URL = "https://your-weather-man-domain.com";
 const char *API_READINGS_PATH = "/api/readings";
+const char *STATION_ID = "main-station";
+const char *STATION_API_KEY = "copy-generated-admin-key-here";
 const bool API_INSECURE_TLS = true;
 ```
+
+Create the station and API key in `/admin/stations`, then copy the station code
+and generated key into `config.h`.
 
 For local HTTP tunneling or LAN testing, use an HTTP base URL:
 
@@ -45,6 +50,7 @@ const char *API_BASE_URL = "http://192.168.1.10:3000";
 
 ## Behavior
 
-- Valid JSON line received from Mega -> POST to `API_BASE_URL + /api/readings`.
+- Valid JSON line received from Mega -> POST to `API_BASE_URL + /api/readings`
+  with station credential headers.
 - HTTP 2xx -> replies `ACK`.
 - Failed Wi-Fi, bad JSON, timeout, or non-2xx response -> replies `NACK`.

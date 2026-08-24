@@ -77,6 +77,8 @@ bool postReading(const String &json) {
   http.setTimeout(HTTP_TIMEOUT_MS);
   http.addHeader("Content-Type", "application/json");
   http.addHeader("Accept", "application/json");
+  http.addHeader("X-Station-Id", STATION_ID);
+  http.addHeader("X-Station-Key", STATION_API_KEY);
 
   int responseCode = http.POST(json);
   String responseBody = http.getString();
